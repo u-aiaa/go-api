@@ -14,13 +14,13 @@ type Task struct {
 	Done    bool   `json:"done" form:"done"`
 }
 
-var tasks = make(map[string]Task, 0)
+var tasks = make(map[string]Task)
 
-func main() {
+func setupRouter() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
 	})
@@ -83,5 +83,10 @@ func main() {
 		}
 	})
 
+	return r
+}
+
+func main() {
+	r := setupRouter()
 	r.Run()
 }
